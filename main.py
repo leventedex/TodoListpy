@@ -1,11 +1,18 @@
-todos = []
+
 while True :
     user_action = input("Type: (a)dd / (s)how / (e)dit / (c)omplete / e(x)it: ")
     user_action = user_action.strip()
     match user_action:
         case 'add' | 'a':
-            todo=input("Enter a todo: ")
+            todo=input("Enter a todo: " + "\n")
+            # read the items from file
+            file = open('todos.txt', 'r')
+            todos = file.readlines()
+            #add the new item to the list
             todos.append(todo)
+            # overwrite the file with new vaues
+            file = open('todos.txt', 'w')
+            file.writelines(todos)
         case 'show' | 's':
             for index, item in enumerate(todos):
                 #print(f"{todos.index(item)}: {item}")
