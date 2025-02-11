@@ -30,8 +30,19 @@ while True :
             file = open('todos.txt', 'r')
             todos = file.readlines()
             file.close()
+
+            #Create a new with the new modified items:
+            #new_todos = []
+            #for item in todos:
+            #    new_item = item.strip('\n')
+            #    new_todos.append(new_item)
+
+            #list comprehension:
+            #new_todos = [item.strip('\n') for item in todos]
+
             for index, item in enumerate(todos):
                 #print(f"{todos.index(item)}: {item}")
+                item=item.strip('\n')
                 print(f"{index}: {item.capitalize()}")
         case 'exit' | 'x':
             break
