@@ -17,19 +17,23 @@ while True :
         case 'add' | 'a':
             todo=input("Enter a todo: ")+ '\n'
             # read the items from file
-            file = open('todos.txt', 'r')
-            todos = file.readlines()
-            file.close()
+            # file = open('todos.txt', 'r')
+            # todos = file.readlines()
+            # file.close()
+
+            #A better way to open file in read mode and close it automatically
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
+
             #add the new item to the list
             todos.append(todo)
             # overwrite the file with new vaues
-            file = open('todos.txt', 'w')
-            file.writelines(todos)
-            file.close()
+            with open('todos.txt', 'w') as file:
+                file.writelines(todos)
+            
         case 'show' | 's':
-            file = open('todos.txt', 'r')
-            todos = file.readlines()
-            file.close()
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
 
             #Create a new with the new modified items:
             #new_todos = []
@@ -48,17 +52,28 @@ while True :
             break
         case 'edit' | 'e':
             index = int(input("Enter the index of the todo to edit: "))
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
             if index < len(todos):
-                print(f"Editing todo: {todos[index]}")
+                print(f"Editing todo: {todos[index].strip("\n")}")
                 new_todo = input("Enter the new todo: ")
-                todos[index] = new_todo
+                todos[index] = new_todo + '\n'
+                #overwrite the file with new values
+                with open('todos.txt', 'w') as file:
+                    file.writelines(todos)
             else:
                 print("Index out of range!")
         case 'complete' | 'c':
             index = int(input("Enter the index of the todo to complete: "))
+            #Build list from the file
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
             if index < len(todos):
-                print(f"Completing todo: {todos[index]}")
+                print(f"Completing todo: {todos[index].strip("\n")}")
                 todos.pop(index)
+                #overwrite the file with new values
+                with open('todos.txt', 'w') as file:
+                    file.writelines(todos)
             else:
                 print("Index out of range!")
         case _:
